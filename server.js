@@ -7,7 +7,7 @@ const server = express();
 
 const projectRouter = require("./projects/projectModel");
 const resourceRouter = require("./resources/resourceRoute");
-const taskRouter = require("./task/task");
+const taskRouter = require("./task/taskRoute");
 
 server.use("/api/projects", projectRouter);
 server.use("/api/resources", resourceRouter);
