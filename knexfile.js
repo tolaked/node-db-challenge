@@ -3,10 +3,16 @@
 module.exports = {
   development: {
     client: "sqlite3",
-    connection: {
-      filename: "./data/cars.db3"
-    },
     useNullAsDefault: true,
+    connection: {
+      filename: "./data/all.sqlite3",
+      typeCast: function(field, next) {
+        if (field.type == "TINY" && field.length == 1) {
+          return field.string() == "1"; // 1 = true, 0 = false
+        }
+        return next();
+      }
+    },
     migrations: {
       directory: "./data/migrations"
     },
@@ -15,8 +21,7 @@ module.exports = {
     },
     pool: {
       afterCreate: (conn, done) => {
-        // runs after a connection is made to the sqlite engine
-        conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
+        conn.run("PRAGMA foreign_keys = ON", done);
       }
     }
   }

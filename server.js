@@ -5,9 +5,18 @@ const projectRouter = require("./data/projectRouter");
 
 const server = express();
 
-server.use(helmet());
-server.use(express.json());
-server.use(cors());
+const projectRouter = require("./projects/projectModel");
+const resourceRouter = require("./resources/resourceRoute");
+const taskRouter = require("./task/task");
+
 server.use("/api/projects", projectRouter);
+server.use("/api/resources", resourceRouter);
+server.use("/api/tasks", taskRouter);
+
+server.get("/", (req, res) => {
+  res.send(`
+      <h2>HELLO THERE!!!!</h>
+    `);
+});
 
 module.exports = server;
